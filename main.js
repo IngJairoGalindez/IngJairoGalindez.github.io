@@ -135,4 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.addEventListener('click', closeModal);
         overlay.addEventListener('click', closeModal);
     }
+    
+    // 5. Animación del logo de inicio
+    const mainLogoLink = document.getElementById('main-logo-link');
+    if(mainLogoLink) {
+        mainLogoLink.addEventListener('click', (e) => {
+            const logoImg = mainLogoLink.querySelector('.logo-img');
+            if(logoImg) {
+                // Remove and re-add class to trigger animation again
+                logoImg.classList.remove('logo-animate');
+                void logoImg.offsetWidth; // trigger reflow
+                logoImg.classList.add('logo-animate');
+            }
+        });
+    }
 });

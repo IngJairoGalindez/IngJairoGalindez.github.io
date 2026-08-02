@@ -596,6 +596,22 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
+.logo-title {
+    font-size: 0.85rem;
+    color: var(--color-text-body);
+    font-weight: 300;
+}
+
+@keyframes logoPulseZoom {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--color-primary)); }
+    50% { transform: scale(1.15); filter: drop-shadow(0 0 25px var(--color-accent)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--color-primary)); }
+}
+
+.logo-animate {
+    animation: logoPulseZoom 0.6s ease-out;
+}
+
 .brands {
     font-size: 0.85rem;
     color: var(--color-primary);
