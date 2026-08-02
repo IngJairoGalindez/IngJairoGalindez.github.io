@@ -752,11 +752,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gallery-item:hover .gallery-overlay {
-    opacity: 0; /* Inverted: dark gradient and text disappear, revealing the illuminated image */
+    background: rgba(5,10,16,0.85);
+    opacity: 1;
 }
 
-.gallery-item:hover .gallery-overlay span {
-    transform: translateY(20px); /* Inverted: text slides down and disappears */
+.gallery-item:hover .gallery-overlay .gallery-text {
+    transform: translateY(-5px);
+    opacity: 0.6;
+}
+
+.gallery-cta {
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--color-accent);
+    font-size: 1.05rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay .gallery-cta {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ==========================================================================
