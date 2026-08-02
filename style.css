@@ -803,6 +803,12 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 400px;
 }
 
+.footer-contact {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
 .footer-contact h3 {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
@@ -866,7 +872,7 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 @media (max-width: 992px) {
     .hero-title { font-size: 2.8rem; }
-    .about-grid, .cases-wrapper, .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-grid, .cases-wrapper, .footer-grid, .footer-contact { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 @media (max-width: 768px) {
