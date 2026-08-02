@@ -1155,11 +1155,50 @@ h1, h2, h3, h4, h5, h6 {
     }
     .lightbox-image-container {
         flex: 1;
-        min-height: 300px;
+        min-height: 250px;
+        padding: 0;
+        justify-content: center;
+    }
+    .lightbox-image-container img {
+        width: 100%;
+        padding-bottom: 50px; /* Space for arrows at the bottom */
+    }
+    .lightbox-nav {
+        position: absolute !important;
+        bottom: 10px !important;
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.1rem !important;
+        z-index: 2060 !important;
+    }
+    .lightbox-prev {
+        left: calc(50% - 50px) !important;
+    }
+    .lightbox-next {
+        right: calc(50% - 50px) !important;
     }
     .lightbox-text {
-        padding: 20px;
+        padding: 15px;
         flex: none;
+    }
+    .lightbox-text h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .lightbox-text p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+    }
+    .lightbox-text .logo-img {
+        height: 40px !important;
+        width: 40px !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .lightbox-text .btn {
+        margin-top: 0.5rem !important;
+        font-size: 0.9rem;
+        padding: 8px 15px;
     }
 }
 
