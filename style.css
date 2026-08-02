@@ -34,6 +34,7 @@
 html {
     scroll-behavior: smooth;
     scroll-snap-type: y proximity;
+    overflow-x: hidden; /* Fix horizontal scroll */
 }
 
 body {
@@ -44,6 +45,8 @@ body {
     -webkit-font-smoothing: antialiased;
     font-weight: 300;
     font-size: 13px; /* Reduce base font size further */
+    overflow-x: hidden; /* Fix horizontal scroll */
+    width: 100%;
 }
 
 .container {
