@@ -1,1296 +1,383 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Formulario de Proyecto · Emanuel Velásquez Dev</title>
-  <meta name="description" content="Formulario de levantamiento de información para tu portafolio digital.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    /* =========================================================
-       RESET & TOKENS
-    ========================================================= */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy-900: #060f1a;
-      --navy-800: #0d1b2a;
-      --navy-700: #132337;
-      --navy-600: #1b3a5c;
-      --navy-400: #2d5f8a;
-      --blue-300: #4a8db8;
-      --blue-100: #90c0dc;
-      --gold-500: #f5c842;
-      --gold-400: #e8a020;
-      --gold-200: #fde89a;
-      --white: #ffffff;
-      --gray-100: #f0f4f8;
-      --gray-200: #d8e4ee;
-      --gray-400: #8a9db0;
-      --gray-600: #4a5a6a;
-      --success: #22c55e;
-      --glass-bg: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.10);
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-gold: 0 0 30px rgba(245,200,66,0.18);
-      --shadow-card: 0 8px 40px rgba(0,0,0,0.4);
-      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      background: var(--navy-900);
-      color: var(--white);
-      overflow-x: hidden;
-    }
-
-    /* =========================================================
-       BACKGROUND PARTICLES / GRADIENT
-    ========================================================= */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 20% 20%, rgba(29,94,166,0.22) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(245,200,66,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 60% at 50% 50%, rgba(13,27,42,0.8) 0%, transparent 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* =========================================================
-       LAYOUT WRAPPER
-    ========================================================= */
-    .app {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* =========================================================
-       TOP BAR
-    ========================================================= */
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(6,15,26,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .top-bar-brand {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--gold-500);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .progress-container {
-      flex: 1;
-      max-width: 260px;
-    }
-    .progress-track {
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold-400), var(--gold-500));
-      border-radius: 99px;
-      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
-      width: 0%;
-      box-shadow: 0 0 10px rgba(245,200,66,0.5);
-    }
-    .progress-label {
-      text-align: right;
-      font-size: 10px;
-      color: var(--gray-400);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    /* =========================================================
-       MAIN CONTENT
-    ========================================================= */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px 40px;
-    }
-
-    /* =========================================================
-       STEP CARD
-    ========================================================= */
-    .step-card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 32px 24px 28px;
-      box-shadow: var(--shadow-card);
-      display: none;
-      animation: slideIn 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
-    }
-    .step-card.active {
-      display: block;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideOut {
-      from { opacity: 1; transform: translateY(0); }
-      to   { opacity: 0; transform: translateY(-20px); }
-    }
-
-    /* =========================================================
-       STEP HEADER
-    ========================================================= */
-    .step-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(245,200,66,0.12);
-      border: 1px solid rgba(245,200,66,0.25);
-      border-radius: 99px;
-      padding: 4px 12px 4px 6px;
-      margin-bottom: 14px;
-    }
-    .step-badge-num {
-      width: 22px;
-      height: 22px;
-      background: var(--gold-500);
-      color: var(--navy-800);
-      border-radius: 50%;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .step-badge-text {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--gold-500);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .step-icon {
-      font-size: 36px;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .step-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 6px;
-      line-height: 1.25;
-    }
-    .step-subtitle {
-      font-size: 13px;
-      color: var(--blue-100);
-      line-height: 1.6;
-      margin-bottom: 26px;
-    }
-
-    /* =========================================================
-       FORM FIELDS
-    ========================================================= */
-    .field-group {
-      margin-bottom: 20px;
-    }
-
-    .field-label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--gold-500);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .field-hint {
-      display: block;
-      font-size: 11.5px;
-      color: var(--gray-400);
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-
-    .field-input, .field-textarea, .field-select {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,255,255,0.12);
-      border-radius: var(--radius-sm);
-      padding: 13px 16px;
-      color: var(--white);
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      transition: var(--transition);
-      outline: none;
-      -webkit-appearance: none;
-    }
-    .field-input::placeholder,
-    .field-textarea::placeholder {
-      color: var(--gray-400);
-      font-size: 13px;
-    }
-    .field-input:focus,
-    .field-textarea:focus,
-    .field-select:focus {
-      border-color: var(--gold-500);
-      background: rgba(245,200,66,0.05);
-      box-shadow: 0 0 0 3px rgba(245,200,66,0.12);
-    }
-
-    .field-textarea {
-      resize: vertical;
-      min-height: 90px;
-      line-height: 1.6;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    /* Checkbox list */
-    .check-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .check-item:hover {
-      border-color: rgba(245,200,66,0.3);
-      background: rgba(245,200,66,0.06);
-    }
-    .check-item input[type="checkbox"] {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--gold-500);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .check-item label {
-      font-size: 13px;
-      color: var(--gray-100);
-      cursor: pointer;
-      line-height: 1.4;
-    }
-
-    /* Other input that appears with checkbox */
-    .other-input-wrapper {
-      display: none;
-      margin-top: 8px;
-    }
-    .other-input-wrapper.visible { display: block; }
-
-    /* =========================================================
-       DIVIDER
-    ========================================================= */
-    .field-divider {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 20px 0 16px;
-    }
-    .field-divider::before, .field-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--glass-border);
-    }
-    .field-divider span {
-      font-size: 10px;
-      color: var(--gray-400);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* Case box */
-    .case-box {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-left: 3px solid var(--gold-400);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .case-box-title {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--gold-400);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    /* =========================================================
-       CONFIRMED BOX (services already defined)
-    ========================================================= */
-    .confirmed-box {
-      background: rgba(34,197,94,0.08);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-left: 3px solid var(--success);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-bottom: 20px;
-    }
-    .confirmed-box-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--success);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .confirmed-box-label::before { content: '✓'; }
-    .confirmed-box-text {
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.6;
-    }
-
-    /* Photo instructions */
-    .photo-card {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-bottom: 10px;
-    }
-    .photo-card-icon {
-      font-size: 28px;
-      flex-shrink: 0;
-    }
-    .photo-card-text {}
-    .photo-card-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .photo-card-desc {
-      font-size: 12px;
-      color: var(--gray-400);
-      line-height: 1.5;
-    }
-    .photo-alert {
-      background: rgba(245,200,66,0.08);
-      border: 1px solid rgba(245,200,66,0.2);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      font-size: 12px;
-      color: var(--gold-200);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    /* =========================================================
-       BUTTONS
-    ========================================================= */
-    .btn-primary {
-      width: 100%;
-      padding: 15px 24px;
-      background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-      color: var(--navy-800);
-      border: none;
-      border-radius: var(--radius-md);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 8px;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(245,200,66,0.35);
-    }
-    .btn-primary:active {
-      transform: translateY(0);
-    }
-
-    .btn-secondary {
-      width: 100%;
-      padding: 13px 24px;
-      background: transparent;
-      color: var(--gray-400);
-      border: 1.5px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .btn-secondary:hover {
-      border-color: rgba(255,255,255,0.25);
-      color: var(--white);
-    }
-
-    .btn-whatsapp {
-      width: 100%;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, #1da851, #25d366);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-md);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 6px 30px rgba(37,211,102,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none;
-      margin-top: 8px;
-    }
-    .btn-whatsapp:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 35px rgba(37,211,102,0.45);
-    }
-
-    .btn-nav-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .btn-nav-row .btn-secondary {
-      margin-top: 0;
-      width: auto;
-      flex: 1;
-    }
-    .btn-nav-row .btn-primary {
-      margin-top: 0;
-      flex: 2;
-    }
-
-    /* =========================================================
-       WELCOME SCREEN
-    ========================================================= */
-    #step-welcome {
-      text-align: center;
-    }
-    .welcome-logo {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, var(--navy-600), var(--navy-700));
-      border: 2px solid rgba(245,200,66,0.4);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 30px;
-      box-shadow: var(--shadow-gold);
-    }
-    .welcome-tag {
-      display: inline-block;
-      background: rgba(245,200,66,0.12);
-      border: 1px solid rgba(245,200,66,0.25);
-      border-radius: 99px;
-      padding: 4px 14px;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--gold-500);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .welcome-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .welcome-title span { color: var(--gold-500); }
-    .welcome-desc {
-      font-size: 13.5px;
-      color: var(--blue-100);
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-    .welcome-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      text-align: left;
-      margin-bottom: 28px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-    .welcome-step-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12.5px;
-      color: var(--gray-100);
-    }
-    .welcome-step-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--gold-500);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* =========================================================
-       SUCCESS SCREEN
-    ========================================================= */
-    #step-success {
-      text-align: center;
-    }
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.25));
-      border: 2px solid rgba(34,197,94,0.4);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 36px;
-      animation: scaleIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
-    }
-    @keyframes scaleIn {
-      from { transform: scale(0); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
-    .success-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .success-subtitle {
-      font-size: 13px;
-      color: var(--blue-100);
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-    .summary-box {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 24px;
-      text-align: left;
-    }
-    .summary-box-title {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--gold-500);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .summary-item {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-    .summary-item-dot {
-      color: var(--gold-500);
-      font-size: 12px;
-      margin-top: 1px;
-    }
-    .summary-item-text {
-      font-size: 12.5px;
-      color: var(--gray-100);
-      line-height: 1.5;
-    }
-
-    /* =========================================================
-       CHAR COUNTER
-    ========================================================= */
-    .char-counter {
-      text-align: right;
-      font-size: 10px;
-      color: var(--gray-400);
-      margin-top: 4px;
-    }
-
-    /* =========================================================
-       TOAST NOTIFICATION
-    ========================================================= */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: rgba(245,200,66,0.15);
-      border: 1px solid rgba(245,200,66,0.3);
-      backdrop-filter: blur(16px);
-      border-radius: 99px;
-      padding: 10px 20px;
-      font-size: 13px;
-      color: var(--gold-500);
-      font-weight: 600;
-      z-index: 999;
-      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-      white-space: nowrap;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* =========================================================
-       FOOTER
-    ========================================================= */
-    .app-footer {
-      text-align: center;
-      padding: 16px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.5px;
-    }
-
-    /* =========================================================
-       RESPONSIVE TWEAKS
-    ========================================================= */
-    @media (max-width: 380px) {
-      .step-card { padding: 24px 16px 22px; }
-      .step-title { font-size: 19px; }
-      .welcome-title { font-size: 22px; }
-    }
-  </style>
-</head>
-<body>
-<div class="app">
-
-  <!-- ======================================================
-       TOP BAR
-  ====================================================== -->
-  <div class="top-bar">
-    <div class="top-bar-brand">EVP · Dev</div>
-    <div class="progress-container">
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-label" id="progressLabel">Inicio</div>
-    </div>
-  </div>
-
-  <!-- ======================================================
-       MAIN
-  ====================================================== -->
-  <div class="main">
-
-    <!-- ==================== BIENVENIDA ==================== -->
-    <div class="step-card active" id="step-welcome">
-      <div class="welcome-logo">⚡</div>
-      <div class="welcome-tag">Formulario de Proyecto</div>
-      <div class="welcome-title">Construyamos tu <span>portafolio digital</span> juntos</div>
-      <div class="welcome-desc">
-        Hola, Jairo. Soy Emanuel Velásquez Pino — tu desarrollador web.<br>
-        Este formulario me permitirá conocer a fondo tus servicios para diseñar una plataforma web de alto impacto para tu negocio. Solo toma <strong>5 minutos</strong>.
-      </div>
-      <div class="welcome-steps">
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Identidad y marca profesional</div>
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Catálogo de servicios</div>
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Proyectos y casos de éxito</div>
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Certificaciones y normativas</div>
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Datos de contacto y cobertura</div>
-        <div class="welcome-step-item"><div class="welcome-step-dot"></div>Material fotográfico</div>
-      </div>
-      <button class="btn-primary" onclick="goTo('step-1')">
-        ⚡ Comenzar ahora
-      </button>
-    </div>
-
-    <!-- ==================== PASO 1 ==================== -->
-    <div class="step-card" id="step-1">
-      <div class="step-badge">
-        <div class="step-badge-num">1</div>
-        <div class="step-badge-text">Módulo 1 de 6</div>
-      </div>
-      <span class="step-icon">🏢</span>
-      <div class="step-title">Identidad Profesional</div>
-      <div class="step-subtitle">Cuéntame cómo quieres que el mundo te vea. Esta información aparecerá en el encabezado principal de tu página web.</div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-nombre">Nombre Comercial</label>
-        <span class="field-hint">¿Trabajará bajo su nombre propio o tiene un nombre de empresa/marca registrada?</span>
-        <input class="field-input" id="f-nombre" type="text" placeholder="Ej: Jairo Galindez Mahecha / Galindez Electromecánica">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-exp">Años de Experiencia</label>
-        <input class="field-input" id="f-exp" type="number" min="1" max="50" placeholder="Ej: 12">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-diferenciador">¿Por qué elegirte a ti?</label>
-        <span class="field-hint">En tus propias palabras, ¿qué te hace diferente de la competencia? (puntualidad, garantías, experiencia, etc.)</span>
-        <textarea class="field-textarea" id="f-diferenciador" placeholder="Cuéntame con tus palabras..."></textarea>
-      </div>
-
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-welcome')">← Atrás</button>
-        <button class="btn-primary" onclick="validateAndGo('step-1','step-2')">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- ==================== PASO 2 ==================== -->
-    <div class="step-card" id="step-2">
-      <div class="step-badge">
-        <div class="step-badge-num">2</div>
-        <div class="step-badge-text">Módulo 2 de 6</div>
-      </div>
-      <span class="step-icon">🔧</span>
-      <div class="step-title">Catálogo de Servicios</div>
-      <div class="step-subtitle">Detalla tus líneas de trabajo para organizar el menú de servicios de tu portafolio.</div>
-
-      <div class="confirmed-box">
-        <div class="confirmed-box-label">Servicios Confirmados — Plantas Eléctricas</div>
-        <div class="confirmed-box-text">Instalación · Mantenimiento · Reparación · Revisión de Transferencia · Suministro de Repuestos · Automatización</div>
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Marcas con las que trabajas</label>
-        <span class="field-hint">Selecciona las marcas en las que tienes mayor experiencia:</span>
-        <div class="check-list">
-          <div class="check-item">
-            <input type="checkbox" id="m-cummins" name="marcas" value="Cummins">
-            <label for="m-cummins">Cummins</label>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jairo Galindez Mahecha | Ingeniería Electromecánica</title>
+    <meta
+      name="description"
+      content="Portafolio de Jairo Galindez Mahecha. Soluciones integrales en ingeniería electromecánica, grupos electrógenos y energía solar."
+    />
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header / Navegación -->
+    <header class="header">
+      <div class="container header-container">
+        <a href="#inicio" class="logo" style="text-decoration: none;">
+          <img src="assets/logo-feline.png" alt="Logo Felino Ingeniería" class="logo-img" />
+          <div class="logo-text">
+            <span class="logo-name">Jairo Galindez</span>
+            <span class="logo-title">Ing. Electromecánica</span>
           </div>
-          <div class="check-item">
-            <input type="checkbox" id="m-cat" name="marcas" value="Caterpillar">
-            <label for="m-cat">Caterpillar / CAT</label>
+        </a>
+        <nav class="nav">
+          <ul class="nav-list">
+            <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+            <li><a href="#servicios" class="nav-link">Servicios</a></li>
+            <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+          </ul>
+        </nav>
+        <a href="#contacto" class="btn btn-primary">Cotizar Proyecto</a>
+      </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="hero" id="inicio">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="badge">30 Años de Experiencia</div>
+          <h1 class="hero-title">
+            Soluciones Integrales en <br /><span class="text-accent"
+              >Ingeniería Electromecánica</span
+            >
+          </h1>
+          <div class="hero-ticker-container">
+            <div class="hero-ticker-track">
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-bolt"></i> Plantas Eléctricas</a>
+              <span class="ticker-separator">•</span>
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-solar-panel"></i> Energía Solar</a>
+              <span class="ticker-separator">•</span>
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-plug"></i> Mantenimiento Eléctrico</a>
+              <span class="ticker-separator">•</span>
+            </div>
+            <div class="hero-ticker-track">
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-bolt"></i> Plantas Eléctricas</a>
+              <span class="ticker-separator">•</span>
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-solar-panel"></i> Energía Solar</a>
+              <span class="ticker-separator">•</span>
+              <a href="#servicios" class="ticker-item"><i class="fa-solid fa-plug"></i> Mantenimiento Eléctrico</a>
+              <span class="ticker-separator">•</span>
+            </div>
           </div>
-          <div class="check-item">
-            <input type="checkbox" id="m-kohler" name="marcas" value="Kohler">
-            <label for="m-kohler">Kohler</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="m-perkins" name="marcas" value="Perkins">
-            <label for="m-perkins">Perkins</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="m-generac" name="marcas" value="Generac">
-            <label for="m-generac">Generac</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="m-otras" name="marcas" value="Otras" onchange="toggleOtherInput('otras-brands-input', this)">
-            <label for="m-otras">Otras marcas</label>
+          <div class="hero-buttons">
+            <a href="#servicios" class="btn btn-primary">Ver Servicios</a>
+            <a href="#proyectos" class="btn btn-secondary"
+              >Proyectos Destacados</a
+            >
           </div>
         </div>
-        <div class="other-input-wrapper" id="otras-brands-input">
-          <input class="field-input" id="f-otras-marcas" type="text" placeholder="Ej: John Deere, MTU, Olympian...">
+      </div>
+      <div class="hero-energy-border"></div>
+    </section>
+
+    <!-- Carrusel de Marcas / Clientes (Prueba Social) -->
+    <section class="brands-marquee">
+      <div class="marquee-track">
+        <span class="brand-logo"><i class="fa-solid fa-building-columns"></i> Bancos</span>
+        <span class="brand-logo"><i class="fa-solid fa-hospital"></i> Hospitales del Estado</span>
+        <span class="brand-logo"><i class="fa-solid fa-shield-halved"></i> Fuerzas Militares</span>
+        <span class="brand-logo"><i class="fa-solid fa-industry"></i> Sector Industrial</span>
+        <span class="brand-logo">CUMMINS</span>
+        <span class="brand-logo">CATERPILLAR</span>
+        <span class="brand-logo">MODASA</span>
+        
+        <span class="brand-logo"><i class="fa-solid fa-building-columns"></i> Bancos</span>
+        <span class="brand-logo"><i class="fa-solid fa-hospital"></i> Hospitales del Estado</span>
+        <span class="brand-logo"><i class="fa-solid fa-shield-halved"></i> Fuerzas Militares</span>
+        <span class="brand-logo"><i class="fa-solid fa-industry"></i> Sector Industrial</span>
+        <span class="brand-logo">CUMMINS</span>
+        <span class="brand-logo">CATERPILLAR</span>
+        <span class="brand-logo">MODASA</span>
+      </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section class="about" id="sobre-mi">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Identidad Profesional</h2>
+          <div class="divider"></div>
         </div>
-      </div>
-
-      <div class="field-divider"><span>Energía Solar</span></div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-solar">Servicios de Energía Solar</label>
-        <span class="field-hint">¿Presta servicios en esta área? Si aplica, descríbelos brevemente. Si no, déjalo en blanco.</span>
-        <textarea class="field-textarea" id="f-solar" placeholder="Ej: Instalación de paneles, dimensionamiento, mantenimiento..."></textarea>
-      </div>
-
-      <div class="field-divider"><span>Otros Servicios</span></div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-otros">Servicios Electromecánicos Adicionales</label>
-        <span class="field-hint">¿Qué otros trabajos realizas además de plantas eléctricas?</span>
-        <textarea class="field-textarea" id="f-otros" placeholder="Ej: Tableros de control, instalaciones industriales, bombas de agua..."></textarea>
-      </div>
-
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-1')">← Atrás</button>
-        <button class="btn-primary" onclick="goTo('step-3')">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- ==================== PASO 3 ==================== -->
-    <div class="step-card" id="step-3">
-      <div class="step-badge">
-        <div class="step-badge-num">3</div>
-        <div class="step-badge-text">Módulo 3 de 6</div>
-      </div>
-      <span class="step-icon">🏆</span>
-      <div class="step-title">Proyectos Destacados</div>
-      <div class="step-subtitle">Los casos de éxito son la prueba más poderosa de tu trabajo. Menciona 2 o 3 proyectos importantes que haya realizado.</div>
-
-      <div class="case-box">
-        <div class="case-box-title">Caso de Éxito #1</div>
-        <div class="field-group">
-          <label class="field-label" for="f-caso1-titulo">¿Qué se hizo?</label>
-          <input class="field-input" id="f-caso1-titulo" type="text" placeholder="Ej: Mantenimiento planta eléctrica Cummins 250kW">
-        </div>
-        <div class="field-group" style="margin-bottom:0">
-          <label class="field-label" for="f-caso1-desc">¿Qué problema se le solucionó al cliente?</label>
-          <textarea class="field-textarea" id="f-caso1-desc" style="min-height:70px" placeholder="Ej: La planta fallaba en las transferencias y dejaba sin energía las instalaciones..."></textarea>
-        </div>
-      </div>
-
-      <div class="case-box">
-        <div class="case-box-title">Caso de Éxito #2</div>
-        <div class="field-group">
-          <label class="field-label" for="f-caso2-titulo">¿Qué se hizo?</label>
-          <input class="field-input" id="f-caso2-titulo" type="text" placeholder="Ej: Instalación planta solar residencial...">
-        </div>
-        <div class="field-group" style="margin-bottom:0">
-          <label class="field-label" for="f-caso2-desc">¿Qué problema se le solucionó al cliente?</label>
-          <textarea class="field-textarea" id="f-caso2-desc" style="min-height:70px" placeholder="Ej: El cliente tenía altas facturas de energía..."></textarea>
-        </div>
-      </div>
-
-      <div class="case-box">
-        <div class="case-box-title">Caso de Éxito #3 — Opcional</div>
-        <div class="field-group">
-          <label class="field-label" for="f-caso3-titulo">¿Qué se hizo?</label>
-          <input class="field-input" id="f-caso3-titulo" type="text" placeholder="Opcional...">
-        </div>
-        <div class="field-group" style="margin-bottom:0">
-          <label class="field-label" for="f-caso3-desc">¿Qué problema se le solucionó al cliente?</label>
-          <textarea class="field-textarea" id="f-caso3-desc" style="min-height:70px" placeholder="Opcional..."></textarea>
-        </div>
-      </div>
-
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-2')">← Atrás</button>
-        <button class="btn-primary" onclick="goTo('step-4')">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- ==================== PASO 4 ==================== -->
-    <div class="step-card" id="step-4">
-      <div class="step-badge">
-        <div class="step-badge-num">4</div>
-        <div class="step-badge-text">Módulo 4 de 6</div>
-      </div>
-      <span class="step-icon">📋</span>
-      <div class="step-title">Certificaciones y Normativas</div>
-      <div class="step-subtitle">Las certificaciones generan confianza en empresas y clientes corporativos. Selecciona las que tienes vigentes.</div>
-
-      <div class="field-group">
-        <label class="field-label">Certificados vigentes</label>
-        <div class="check-list">
-          <div class="check-item">
-            <input type="checkbox" id="c-retie" name="certs" value="Normativa RETIE">
-            <label for="c-retie">Normativa RETIE</label>
+        <div class="about-grid">
+          <div class="about-card" data-aos="fade-up">
+            <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <h3>Objetivo Profesional</h3>
+            <p>
+              Poner en práctica todos los conocimientos adquiridos durante mi
+              formación tecnológica, seminarios y 30 años de experiencia
+              laboral. Busco formar parte de un equipo de trabajo que me permita
+              desarrollarme personal y profesionalmente, asegurando resultados
+              de alta confiabilidad.
+            </p>
           </div>
-          <div class="check-item">
-            <input type="checkbox" id="c-alturas" name="certs" value="Trabajo en Alturas">
-            <label for="c-alturas">Certificado de Trabajo en Alturas</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="c-tarjeta" name="certs" value="Matrícula o Tarjeta Profesional">
-            <label for="c-tarjeta">Matrícula o Tarjeta Profesional</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="c-marca" name="certs" value="Certificación de Marca (Cummins / CAT / otra)">
-            <label for="c-marca">Certificación de Marca (Cummins / CAT / otra)</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="c-sena" name="certs" value="Curso Técnico SENA" >
-            <label for="c-sena">Curso Técnico SENA</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="c-otros-c" name="certs" value="Otro" onchange="toggleOtherInput('otras-certs-input', this)">
-            <label for="c-otros-c">Otro certificado</label>
+          <div class="about-card highlight-card" data-aos="fade-left" data-aos-delay="200">
+            <div class="card-icon"><i class="fa-solid fa-certificate"></i></div>
+            <h3>Certificaciones y Avales</h3>
+            <p>
+              Poseo matrícula CONTEC como Técnico Electricista en las
+              categorías:
+            </p>
+            <ul class="cert-list">
+              <li>
+                <strong>TE1</strong> - Instalaciones Eléctricas Interiores
+              </li>
+              <li>
+                <strong>TE2</strong> - Instalaciones Eléctricas de Distribución
+              </li>
+              <li><strong>TE6</strong> - Mantenimiento y Reparación</li>
+            </ul>
           </div>
         </div>
-        <div class="other-input-wrapper" id="otras-certs-input">
-          <input class="field-input" id="f-otras-certs" type="text" placeholder="¿Cuál?">
+      </div>
+    </section>
+
+    <!-- Sección Servicios -->
+    <section class="services" id="servicios">
+      <div class="container">
+        <div class="section-header center">
+          <h2 class="section-title">Catálogo de Servicios</h2>
+          <div class="divider center-divider"></div>
+          <p class="section-desc">
+            Especialista en sistemas de generación de energía y control
+            eléctrico.
+          </p>
+        </div>
+        <div class="services-grid">
+          <!-- Servicio 1 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="service-icon"><i class="fa-solid fa-bolt"></i></div>
+            <h3 class="service-title">Plantas Eléctricas</h3>
+            <p class="service-desc">
+              Instalación, mantenimiento, reparación, transferencia, repuestos y
+              automatización de grupos electrógenos.
+            </p>
+            <div class="brands">
+              <span>Cummins</span> • <span>Caterpillar</span> •
+              <span>Kohler</span> • <span>Perkins</span> •
+              <span>Generac</span> • <span>John Deere</span> •
+              <span>MTU</span> • <span>Volvo</span> • <span>Yanmar</span>
+            </div>
+          </div>
+          <!-- Servicio 2 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="150">
+            <div class="service-icon"><i class="fa-solid fa-solar-panel"></i></div>
+            <h3 class="service-title">Energía Solar</h3>
+            <p class="service-desc">
+              Experiencia de 5 años en sistemas solares fotovoltaicos, abarcando
+              desde el montaje de estructuras (trackers y mesas) hasta la puesta
+              en funcionamiento.
+            </p>
+          </div>
+          <!-- Servicio 3 -->
+          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-icon"><i class="fa-solid fa-plug"></i></div>
+            <h3 class="service-title">Mantenimiento Eléctrico</h3>
+            <p class="service-desc">
+              Cableado y mantenimiento de sistemas eléctricos a nivel
+              residencial y comercial, garantizando el cumplimiento estricto de
+              la norma RETIE.
+            </p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-3')">← Atrás</button>
-        <button class="btn-primary" onclick="goTo('step-5')">Siguiente →</button>
-      </div>
-    </div>
+    <!-- Sección Proyectos -->
+    <section class="projects" id="proyectos">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Proyectos Destacados</h2>
+          <div class="divider"></div>
+        </div>
 
-    <!-- ==================== PASO 5 ==================== -->
-    <div class="step-card" id="step-5">
-      <div class="step-badge">
-        <div class="step-badge-num">5</div>
-        <div class="step-badge-text">Módulo 5 de 6</div>
-      </div>
-      <span class="step-icon">📍</span>
-      <div class="step-title">Contacto y Cobertura</div>
-      <div class="step-subtitle">Esta información aparecerá de forma pública en tu portafolio para que los clientes te contacten directamente.</div>
+        <div class="cases-wrapper">
+          <div class="case-card" data-aos="fade-right">
+            <div class="case-content">
+              <h4>Caso de Éxito 1</h4>
+              <h3>
+                Automatización y Seguridad en el Sector Salud e Industrial
+              </h3>
+              <p>
+                Montaje de grupos electrógenos de diferentes potencias en
+                Bancos, Industria, Fuerzas Militares, Hospitales del Estado y
+                Clínicas Particulares.
+              </p>
+              <p>
+                Se implementaron sistemas de transferencia automática para
+                reemplazar antiguos sistemas de cuchillas manuales, mejorando
+                radicalmente la seguridad para el personal operativo y la
+                integridad de los equipos.
+              </p>
+            </div>
+          </div>
 
-      <div class="field-group">
-        <label class="field-label" for="f-whatsapp">Número de WhatsApp</label>
-        <input class="field-input" id="f-whatsapp" type="tel" placeholder="Ej: 3001234567">
-      </div>
+          <div class="case-card" data-aos="fade-left">
+            <div class="case-content">
+              <h4>Caso de Éxito 2</h4>
+              <h3>Energización Rural en Zonas Remotas</h3>
+              <p>
+                Montaje e instalación de grupos electrógenos para proveer
+                energía a poblaciones aisladas en varios sitios del río Atrato,
+                región del Chocó y la zona de Urabá.
+              </p>
+              <p>
+                Superación de retos logísticos en zonas de difícil acceso
+                geográfico para llevar energía confiable a comunidades
+                vulnerables.
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="f-correo">Correo Electrónico</label>
-        <input class="field-input" id="f-correo" type="email" placeholder="Ej: jairo@correo.com">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="f-cobertura">Zona de Cobertura</label>
-        <span class="field-hint">¿En qué ciudades, municipios o departamentos prestas tus servicios?</span>
-        <textarea class="field-textarea" id="f-cobertura" placeholder="Ej: Bogotá, Cundinamarca, Boyacá..."></textarea>
-      </div>
-
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-4')">← Atrás</button>
-        <button class="btn-primary" onclick="validateAndGo('step-5','step-6')">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- ==================== PASO 6 ==================== -->
-    <div class="step-card" id="step-6">
-      <div class="step-badge">
-        <div class="step-badge-num">6</div>
-        <div class="step-badge-text">Módulo 6 de 6</div>
-      </div>
-      <span class="step-icon">📸</span>
-      <div class="step-title">Material Fotográfico</div>
-      <div class="step-subtitle">Las imágenes son el elemento visual más importante de tu portafolio. Necesito que me las envíes por WhatsApp.</div>
-
-      <div class="photo-alert">
-        ⚠️ Envíalas por WhatsApp <strong>como documento</strong> (no como foto normal) para no perder calidad.
-      </div>
-
-      <div class="photo-card">
-        <div class="photo-card-icon">🧑‍🔧</div>
-        <div class="photo-card-text">
-          <div class="photo-card-title">Foto profesional tuya</div>
-          <div class="photo-card-desc">En campo, con casco y equipo de protección (EPP). Esta será tu foto de perfil en el portafolio.</div>
+        <!-- Galería de Trabajos -->
+        <h3 class="gallery-title">Galería de Trabajos en Campo</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/cummins.jpeg"
+              alt="Suministro y traslado de Grupos Electrógenos de gran capacidad"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Suministro y traslado de Grupos Electrógenos</span>
+            </div>
+          </div>
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/tablero.jpeg"
+              alt="Mantenimiento y armado de tableros de control de potencia"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Mantenimiento y armado de tableros de control</span>
+            </div>
+          </div>
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/modasa.jpeg"
+              alt="Montaje de sistema de respaldo de energía"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Sistemas de respaldo de energía (Megamall)</span>
+            </div>
+          </div>
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/tanque.jpeg"
+              alt="Mantenimiento industrial a tanques de almacenamiento"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Mantenimiento a tanques de almacenamiento</span>
+            </div>
+          </div>
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/lovato_ats.jpeg"
+              alt="Sistemas de Transferencia Automática"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Sistemas de Transferencia Automática ATS</span>
+            </div>
+          </div>
+          <div class="gallery-item" data-aos="fade-up">
+            <img
+              src="assets/cummins_2.jpeg"
+              alt="Instalación de Generadores Cummins"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <span>Instalación de Generadores Cummins</span>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href="catalogo.html" class="btn btn-secondary">Ver Catálogo Completo de Proyectos</a>
         </div>
       </div>
+    </section>
 
-      <div class="photo-card">
-        <div class="photo-card-icon">⚙️</div>
-        <div class="photo-card-text">
-          <div class="photo-card-title">Fotos de trabajos realizados</div>
-          <div class="photo-card-desc">Plantas eléctricas impecables, tableros organizados, instalaciones terminadas. Las fotos "Antes y Después" son ideales.</div>
+    <!-- Footer / Contacto -->
+    <footer class="footer" id="contacto">
+      <div class="container footer-grid">
+        <div class="footer-info" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <a href="#inicio" class="logo" style="text-decoration: none;">
+            <img src="assets/logo-feline.png" alt="Logo Felino Ingeniería" class="logo-img" />
+            <div class="logo-text" style="text-align: left;">
+              <span class="logo-name">Jairo Galindez</span>
+              <span class="logo-title">Ing. Electromecánica</span>
+            </div>
+          </a>
+          <p class="footer-desc" style="margin-top: 1.5rem; font-size: 1.05rem; font-weight: 500; color: var(--color-text);">
+            ¿Listo para llevar su infraestructura al siguiente nivel? <br/>
+            Ofrecemos soluciones electromecánicas robustas, eficientes y seguras. <strong style="color: var(--color-accent);">¡Asegure la rentabilidad y el éxito operativo de su próximo proyecto hoy mismo!</strong>
+          </p>
+        </div>
+
+        <div class="footer-contact" style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;">
+          <div>
+            <h3 style="margin-bottom: 1.5rem;">Contacto Directo</h3>
+            <ul class="contact-list">
+              <li>
+                <span class="icon"><i class="fa-brands fa-whatsapp"></i></span>
+                <a
+                  href="https://wa.me/573127462096?text=Hola%20Jairo,%20deseo%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20ingenier%C3%ADa."
+                  target="_blank"
+                  >+57 312 746 2096 (WhatsApp)</a
+                >
+              </li>
+              <li>
+                <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+                <a href="mailto:galindezjairo@gmail.com"
+                  >galindezjairo@gmail.com</a
+                >
+              </li>
+              <li>
+                <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+                <span>Cobertura: Zona Costa Atlántica y Santanderes</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1.5rem;">Solicitud de Cotización (B2B)</h3>
+            <form action="#" method="POST" class="b2b-form">
+                <input type="text" placeholder="Nombre / Empresa" required style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px;">
+                <input type="email" placeholder="Correo Electrónico" required style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px;">
+                <textarea placeholder="Descripción del proyecto o servicio requerido" rows="3" required style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px; resize: vertical;"></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Solicitud</button>
+            </form>
+          </div>
         </div>
       </div>
-
-      <div class="field-group" style="margin-top:20px">
-        <label class="field-label" for="f-fotos-nota">¿Tienes fotos disponibles?</label>
-        <input class="field-input" id="f-fotos-nota" type="text" placeholder="Ej: Sí, tengo 10 fotos / Tengo pocas, ¿qué hago?">
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Jairo Galindez Mahecha. Todos los derechos reservados.
+        </p>
       </div>
+    </footer>
 
-      <div class="btn-nav-row">
-        <button class="btn-secondary" onclick="goTo('step-5')">← Atrás</button>
-        <button class="btn-primary" onclick="sendToWhatsApp()">✅ Finalizar y Enviar</button>
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/573127462096?text=Hola%20Jairo,%20deseo%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20ingenier%C3%ADa." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+      <div class="whatsapp-text">Solicitar Asesoría</div>
+      <div class="whatsapp-icon">
+        <i class="fa-brands fa-whatsapp"></i>
       </div>
-    </div>
+    </a>
 
-    <!-- ==================== ÉXITO ==================== -->
-    <div class="step-card" id="step-success">
-      <div class="success-icon">✅</div>
-      <div class="success-title">¡Información enviada!</div>
-      <div class="success-subtitle">
-        Tus respuestas han sido enviadas a Emanuel por WhatsApp. En breve recibirás una confirmación y los próximos pasos del proyecto.
-      </div>
-      <div class="summary-box">
-        <div class="summary-box-title">📋 Resumen del formulario</div>
-        <div id="summary-content"></div>
-      </div>
-      <a id="wa-link" href="#" target="_blank" class="btn-whatsapp" style="text-decoration:none;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Abrir WhatsApp
-      </a>
-      <button class="btn-secondary" onclick="goTo('step-welcome')" style="margin-top:12px">Llenar nuevamente</button>
-    </div>
-
-  </div><!-- end main -->
-
-  <div class="app-footer">Emanuel Velásquez Pino · Desarrollo & Estructuración Web · 2026</div>
-</div><!-- end app -->
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<script>
-  // ============================================================
-  // STATE
-  // ============================================================
-  const STEPS = ['step-welcome','step-1','step-2','step-3','step-4','step-5','step-6','step-success'];
-  const WA_NUMBER = '573053355350'; // Colombia +57
-
-  let currentStep = 'step-welcome';
-
-  // ============================================================
-  // NAVIGATION
-  // ============================================================
-  function goTo(stepId) {
-    const current = document.getElementById(currentStep);
-    const next    = document.getElementById(stepId);
-    if (!next) return;
-
-    current.style.animation = 'none';
-    current.classList.remove('active');
-
-    currentStep = stepId;
-    next.style.animation = '';
-    next.classList.add('active');
-
-    updateProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function validateAndGo(fromId, toId) {
-    const requiredFields = {
-      'step-1': ['f-nombre','f-exp','f-diferenciador'],
-      'step-5': ['f-whatsapp']
-    };
-    const fields = requiredFields[fromId] || [];
-    let allOk = true;
-
-    fields.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (!el.value.trim()) {
-        el.style.borderColor = '#ef4444';
-        el.style.boxShadow  = '0 0 0 3px rgba(239,68,68,0.15)';
-        el.addEventListener('input', () => {
-          el.style.borderColor = '';
-          el.style.boxShadow = '';
-        }, { once: true });
-        allOk = false;
-      }
-    });
-
-    if (!allOk) {
-      showToast('⚠️ Por favor completa los campos requeridos');
-      return;
-    }
-    goTo(toId);
-  }
-
-  // ============================================================
-  // PROGRESS BAR
-  // ============================================================
-  function updateProgress() {
-    const labels = {
-      'step-welcome': 'Inicio',
-      'step-1': 'Identidad',
-      'step-2': 'Servicios',
-      'step-3': 'Proyectos',
-      'step-4': 'Certificaciones',
-      'step-5': 'Contacto',
-      'step-6': 'Material Gráfico',
-      'step-success': 'Completado'
-    };
-    const idx = STEPS.indexOf(currentStep);
-    const pct = Math.round((idx / (STEPS.length - 1)) * 100);
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('progressLabel').textContent = labels[currentStep] || '';
-  }
-
-  // ============================================================
-  // TOGGLE OTHER INPUT
-  // ============================================================
-  function toggleOtherInput(wrapperId, checkbox) {
-    const wrapper = document.getElementById(wrapperId);
-    if (!wrapper) return;
-    wrapper.classList.toggle('visible', checkbox.checked);
-  }
-
-  // ============================================================
-  // COLLECT DATA
-  // ============================================================
-  function collectData() {
-    const val = id => (document.getElementById(id)?.value || '').trim();
-
-    const marcas = [...document.querySelectorAll('input[name="marcas"]:checked')]
-      .map(c => c.value).join(', ');
-    const otrasMarcas = val('f-otras-marcas');
-    const marcasCompleto = otrasMarcas ? `${marcas}, ${otrasMarcas}` : marcas;
-
-    const certs = [...document.querySelectorAll('input[name="certs"]:checked')]
-      .map(c => c.value).join(', ');
-    const otrasCerts = val('f-otras-certs');
-    const certsCompleto = otrasCerts ? `${certs}, ${otrasCerts}` : certs;
-
-    const caso1t = val('f-caso1-titulo'); const caso1d = val('f-caso1-desc');
-    const caso2t = val('f-caso2-titulo'); const caso2d = val('f-caso2-desc');
-    const caso3t = val('f-caso3-titulo'); const caso3d = val('f-caso3-desc');
-
-    let casos = '';
-    if (caso1t) casos += `Caso 1: ${caso1t}. ${caso1d}`;
-    if (caso2t) casos += ` | Caso 2: ${caso2t}. ${caso2d}`;
-    if (caso3t) casos += ` | Caso 3: ${caso3t}. ${caso3d}`;
-
-    return {
-      nombre:        val('f-nombre'),
-      experiencia:   val('f-exp'),
-      diferenciador: val('f-diferenciador'),
-      marcas:        marcasCompleto || 'No especificado',
-      solar:         val('f-solar') || 'No aplica',
-      otrosServ:     val('f-otros') || 'No especificado',
-      casos:         casos || 'No especificado',
-      certs:         certsCompleto || 'No especificado',
-      whatsapp:      val('f-whatsapp'),
-      correo:        val('f-correo') || 'No indicado',
-      cobertura:     val('f-cobertura') || 'No especificado',
-      fotos:         val('f-fotos-nota') || 'No indicado'
-    };
-  }
-
-  // ============================================================
-  // SEND TO WHATSAPP
-  // ============================================================
-  function sendToWhatsApp() {
-    const d = collectData();
-
-    const msg =
-`*FORMULARIO DE PORTAFOLIO DIGITAL*
-Fecha: ${new Date().toLocaleDateString('es-CO', {day:'2-digit', month:'long', year:'numeric'})}
-
------------------------------
-*MODULO 1 - IDENTIDAD*
------------------------------
-- Nombre comercial: ${d.nombre}
-- Anos de experiencia: ${d.experiencia}
-- Diferenciador: ${d.diferenciador}
-
------------------------------
-*MODULO 2 - SERVICIOS*
------------------------------
-- Plantas electricas: Instalacion, mantenimiento, reparacion, transferencia, repuestos, automatizacion.
-- Marcas: ${d.marcas}
-- Energia solar: ${d.solar}
-- Otros servicios: ${d.otrosServ}
-
------------------------------
-*MODULO 3 - PROYECTOS*
------------------------------
-${d.casos}
-
------------------------------
-*MODULO 4 - CERTIFICACIONES*
------------------------------
-${d.certs}
-
------------------------------
-*MODULO 5 - CONTACTO*
------------------------------
-- WhatsApp: ${d.whatsapp}
-- Correo: ${d.correo}
-- Cobertura: ${d.cobertura}
-
------------------------------
-*MODULO 6 - FOTOS*
------------------------------
-${d.fotos}
-
-_Formulario por Emanuel Velasquez Pino - EVP Dev_`;
-
-    const encoded = encodeURIComponent(msg);
-    const waUrl   = `https://wa.me/${WA_NUMBER}?text=${encoded}`;
-
-    // Populate summary
-    const summaryItems = [
-      { label: 'Nombre', value: d.nombre },
-      { label: 'Experiencia', value: d.experiencia + ' años' },
-      { label: 'Marcas', value: d.marcas },
-      { label: 'WhatsApp', value: d.whatsapp },
-      { label: 'Cobertura', value: d.cobertura },
-    ];
-    const summaryHtml = summaryItems.map(i =>
-      `<div class="summary-item"><div class="summary-item-dot">▸</div><div class="summary-item-text"><strong>${i.label}:</strong> ${i.value}</div></div>`
-    ).join('');
-    document.getElementById('summary-content').innerHTML = summaryHtml;
-
-    // Set button href
-    document.getElementById('wa-link').href = waUrl;
-
-    goTo('step-success');
-
-    // Auto-open WhatsApp
-    setTimeout(() => window.open(waUrl, '_blank'), 600);
-  }
-
-  // ============================================================
-  // TOAST
-  // ============================================================
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
-
-  // ============================================================
-  // INIT
-  // ============================================================
-  updateProgress();
-</script>
-</body>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>

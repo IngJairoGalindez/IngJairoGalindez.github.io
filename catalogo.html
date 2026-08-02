@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Proyectos | Jairo Galindez Mahecha</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navegación -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <span class="logo-name">Jairo Galindez</span>
+                <span class="logo-title">Ing. Electromecánica</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">← Volver al Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Catálogo de Trabajos -->
+    <section class="projects" style="padding-top: 120px;">
+        <div class="container">
+            <div class="section-header center">
+                <h2 class="section-title">Catálogo Completo de Trabajos</h2>
+                <div class="divider center-divider"></div>
+                <p class="section-desc">Registro fotográfico de proyectos de campo, instalaciones y mantenimientos.</p>
+            </div>
+            
+            <div class="catalog-filters" data-aos="fade-up">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="generador">Generadores</button>
+                <button class="filter-btn" data-filter="tablero">Tableros de Control</button>
+                <button class="filter-btn" data-filter="mantenimiento">Mantenimiento de Tanques</button>
+            </div>
+            
+            <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(378px, 1fr)); gap: 2rem;">
+                
+                <!-- 1 -->
+                <div class="gallery-item catalog-item" data-category="tablero" data-title="Tableros de Control de Potencia" data-desc="Mantenimiento y armado de tableros de control de potencia con componentes ABB, garantizando la correcta distribución y protección de circuitos en entornos industriales." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/tablero.jpeg" alt="Mantenimiento y armado de tableros de control de potencia" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Tableros de Control de Potencia (Componentes ABB)</span>
+                    </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="gallery-item catalog-item" data-category="generador" data-title="Grupos Electrógenos Cummins" data-desc="Suministro, traslado y puesta en marcha de grupos electrógenos de la marca Cummins para asegurar el respaldo energético." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/cummins.jpeg" alt="Generador Cummins" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Traslado de Grupos Electrógenos Cummins</span>
+                    </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="gallery-item catalog-item" data-category="generador" data-title="Instalación de Generadores" data-desc="Proyectos completos de suministro e instalación de generadores de alta potencia para el sector industrial y corporativo." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/cummins_2.jpeg" alt="Generador Cummins 2" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Suministro e Instalación de Generadores Cummins</span>
+                    </div>
+                </div>
+
+                <!-- 4 -->
+                <div class="gallery-item catalog-item" data-category="tablero" data-title="Sistemas de Transferencia Automática" data-desc="Montaje y configuración de módulos ATS Lovato para transferencias seguras y automatizadas ante cortes de la red eléctrica." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/lovato_ats.jpeg" alt="Módulo ATS Lovato" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Sistemas de Transferencia Automática ATS (Lovato)</span>
+                    </div>
+                </div>
+
+                <!-- 5 -->
+                <div class="gallery-item catalog-item" data-category="generador" data-title="Generador Modasa (Construcción)" data-desc="Instalación de generador Modasa para el sector de la construcción, brindando energía continua a maquinaria pesada y campamentos." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/modasa_condor.jpeg" alt="Generador Modasa El Cóndor" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Instalación de Generador Modasa (Sector Construcción)</span>
+                    </div>
+                </div>
+
+                <!-- 6 -->
+                <div class="gallery-item catalog-item" data-category="generador" data-title="Respaldo Sector Comercial" data-desc="Implementación de sistemas de respaldo de energía ininterrumpida en centros comerciales (Megamall) con generadores Modasa." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/modasa.jpeg" alt="Generador Modasa Megamall" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Respaldo de Energía en Sector Comercial (Megamall)</span>
+                    </div>
+                </div>
+
+                <!-- 7 -->
+                <div class="gallery-item catalog-item" data-category="mantenimiento" data-title="Mantenimiento a Tanques Industriales" data-desc="Servicio especializado de mantenimiento preventivo y correctivo a tanques de almacenamiento industrial." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/tanque.jpeg" alt="Mantenimiento de Tanques" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Mantenimiento a Tanques de Almacenamiento Industrial</span>
+                    </div>
+                </div>
+
+                <!-- 8 -->
+                <div class="gallery-item catalog-item" data-category="mantenimiento" data-title="Acondicionamiento de Tanques" data-desc="Labores profundas de acondicionamiento, pulido y limpieza de tanques para garantizar la pureza del almacenamiento." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/tanque_2.jpeg" alt="Mantenimiento de Tanques" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Labores de Acondicionamiento y Pulido de Tanques</span>
+                    </div>
+                </div>
+
+                <!-- 9 -->
+                <div class="gallery-item catalog-item" data-category="mantenimiento" data-title="Estación de Telecomunicaciones" data-desc="Adecuación de sistemas de almacenamiento en estaciones remotas de telecomunicaciones, asegurando autonomía en zonas de difícil acceso." style="aspect-ratio: 1/1;" data-aos="fade-up">
+                    <img src="assets/tanque_marbella.jpeg" alt="Tanque Estación Marbella" loading="lazy">
+                    <div class="gallery-overlay" style="opacity: 1; background: linear-gradient(to top, rgba(5,10,16,0.95) 0%, rgba(5,10,16,0.5) 100%);">
+                        <span style="transform: none;">Adecuación de Almacenamiento (Estación Telecomunicaciones)</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div style="text-align: center; margin-top: 4rem;">
+                <a href="index.html" class="btn btn-secondary">← Volver al Inicio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contacto -->
+    <footer class="footer" id="contacto">
+        <div class="container footer-grid" style="grid-template-columns: 1fr; text-align: center; margin-bottom: 2rem;">
+            <div class="footer-info" style="margin: 0 auto;">
+                <div class="logo" style="align-items: center;">
+                    <span class="logo-name">Jairo Galindez</span>
+                    <span class="logo-title">Ing. Electromecánica</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Jairo Galindez Mahecha. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/573127462096?text=Hola%20Jairo,%20deseo%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20ingenier%C3%ADa." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+      <div class="whatsapp-text">Solicitar Asesoría</div>
+      <div class="whatsapp-icon">
+        <i class="fa-brands fa-whatsapp"></i>
+      </div>
+    </a>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <div class="lightbox-overlay" id="lightboxOverlay"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+            <div class="lightbox-body">
+                <div class="lightbox-image-container">
+                    <button class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <img src="" alt="" id="lightboxImg">
+                    <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="lightbox-text">
+                    <h3 id="lightboxTitle">Título</h3>
+                    <p id="lightboxDesc">Descripción de la imagen.</p>
+                    <a href="#" class="btn btn-primary" id="lightboxWhatsapp" target="_blank" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 8px; background: #25D366; border-color: #25D366; color: white; width: fit-content;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Solicitar Cotización
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
