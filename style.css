@@ -1349,3 +1349,40 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0 0 8px rgba(0, 229, 255, 0.9), 0 0 15px rgba(0, 229, 255, 0.6);
     transform: scale(1.1);
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS - CATALOG FILTERS
+   ========================================================================== */
+@media (max-width: 768px) {
+    .catalog-filters {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.8rem;
+        /* Padding extra al inicio y final para que no pegue al borde */
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .catalog-filters::-webkit-scrollbar {
+        height: 3px;
+    }
+    
+    .catalog-filters::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    
+    .catalog-filters::-webkit-scrollbar-thumb {
+        background: var(--color-accent);
+        border-radius: 3px;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+}
