@@ -986,9 +986,17 @@ h1, h2, h3, h4, h5, h6 {
 .lightbox-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(5, 10, 16, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: linear-gradient(135deg, rgba(5, 10, 16, 0.95) 0%, rgba(0, 229, 255, 0.08) 50%, rgba(5, 10, 16, 0.95) 100%);
+    background-size: 200% 200%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .lightbox-content {
@@ -1061,6 +1069,8 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .lightbox-text h3 {

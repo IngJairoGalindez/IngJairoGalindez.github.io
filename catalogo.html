@@ -19,10 +19,13 @@
     <!-- Header / Navegación -->
     <header class="header">
         <div class="container header-container">
-            <div class="logo">
-                <span class="logo-name">Jairo Galindez</span>
-                <span class="logo-title">Ing. Electromecánica</span>
-            </div>
+            <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+                <img src="assets/logo-feline.png" alt="Logo Felino Ingeniería" class="logo-img" />
+                <div class="logo-text">
+                    <span class="logo-name">Jairo Galindez</span>
+                    <span class="logo-title">Ing. Electromecánica</span>
+                </div>
+            </a>
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="index.html" class="nav-link">← Volver al Inicio</a></li>
@@ -47,7 +50,7 @@
                 <button class="filter-btn" data-filter="mantenimiento">Mantenimiento de Tanques</button>
             </div>
             
-            <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(378px, 1fr)); gap: 2rem;">
+            <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
                 
                 <!-- 1 -->
                 <div class="gallery-item catalog-item" data-category="tablero" data-title="Tableros de Control de Potencia" data-desc="Mantenimiento y armado de tableros de control de potencia con componentes ABB, garantizando la correcta distribución y protección de circuitos en entornos industriales." style="aspect-ratio: 1/1;" data-aos="fade-up">
@@ -132,11 +135,18 @@
     <!-- Footer / Contacto -->
     <footer class="footer" id="contacto">
         <div class="container footer-grid" style="grid-template-columns: 1fr; text-align: center; margin-bottom: 2rem;">
-            <div class="footer-info" style="margin: 0 auto;">
-                <div class="logo" style="align-items: center;">
-                    <span class="logo-name">Jairo Galindez</span>
-                    <span class="logo-title">Ing. Electromecánica</span>
-                </div>
+            <div class="footer-info" style="margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <a href="index.html" class="logo" style="margin-bottom: 1rem; text-decoration: none; color: inherit;">
+                    <img src="assets/logo-feline.png" alt="Logo Felino Ingeniería" class="logo-img" />
+                    <div class="logo-text" style="text-align: left;">
+                        <span class="logo-name">Jairo Galindez</span>
+                        <span class="logo-title">Ing. Electromecánica</span>
+                    </div>
+                </a>
+                <p style="color: var(--color-text-body); font-size: 0.95rem; max-width: 500px; margin: 0 auto; line-height: 1.6;">
+                    ¿Listo para llevar su infraestructura al siguiente nivel?<br>
+                    Ofrecemos soluciones electromecánicas robustas, eficientes y seguras. <strong style="color: var(--color-accent); font-weight: 500;">¡Asegure la rentabilidad y el éxito operativo de su próximo proyecto hoy mismo!</strong>
+                </p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -164,6 +174,9 @@
                     <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
                 <div class="lightbox-text">
+                    <a href="index.html" style="text-decoration: none;">
+                        <img src="assets/logo-feline.png" alt="Logo" class="logo-img" style="height: 60px; width: 60px; margin-bottom: 1rem;" />
+                    </a>
                     <h3 id="lightboxTitle">Título</h3>
                     <p id="lightboxDesc">Descripción de la imagen.</p>
                     <a href="#" class="btn btn-primary" id="lightboxWhatsapp" target="_blank" style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 8px; background: #25D366; border-color: #25D366; color: white; width: fit-content;">

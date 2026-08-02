@@ -1,0 +1,23 @@
+# Dependencias y librerías
+node_modules/
+
+# Archivos de sistema (Windows, macOS)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de entorno y logs
+.env
+.env.local
+*.log
+npm-debug.log*
+
+# Entorno de IA (si aplica)
+.gemini/
+scratch/
+
+# Documentos en progreso / Editables
+*.docx
+
+# (Opcional) Si decides no subir los PDFs finales al repo, descomenta las líneas de abajo:
+# *.pdf
